@@ -178,7 +178,7 @@ func (entry *Entry) parseParams(d *xml.Decoder, start xml.StartElement) error {
 
 	for _, item := range values.Items {
 		for _, name := range item.Names {
-			entry.Params[name] = string(item.Text)
+			entry.Params[name] = strings.TrimSpace(string(item.Text))
 		}
 	}
 	return nil
