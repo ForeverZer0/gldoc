@@ -109,14 +109,14 @@ func serveFunc(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var sb bytes.Buffer
-	fmt.Fprintf(&sb, `{"name":"%s","desc":%s,"args":{`, name, strconv.Quote(entry.Desc))
-	for i, arg := range fn.Args {
+	fmt.Fprintf(&sb, `{"name":"%s","desc":%s,"args":[`, name, strconv.Quote(entry.Desc))
+	for i, argName := range fn.Args {
 		if i > 0 {
 			sb.WriteByte(',')
 		}
-		fmt.Fprintf(&sb, `"%s":%s`, arg, strconv.Quote(entry.Params[arg]))
+		fmt.Fprintf(&sb, `{"name":"%s","desc":%s}`, argName, strconv.Quote(entry.Params[argName]))
 	}
-	fmt.Fprintf(&sb, `},"seealso":%s,"errors":%s}`, util.JsonArray(entry.SeeAlso), util.JsonArray(entry.Errors))
+	fmt.Fprintf(&sb, `],"seealso":%s,"errors":%s}`, util.JsonArray(entry.SeeAlso), util.JsonArray(entry.Errors))
 	w.Write(sb.Bytes())
 }
 
