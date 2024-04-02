@@ -8,8 +8,6 @@ import (
 	"path/filepath"
 	"slices"
 	"strings"
-
-	"github.com/ForeverZer0/gldoc/util"
 )
 
 // A Entry describes a simplified reference page of the OpenGL spec, intended for providing brief inline documentation.
@@ -138,6 +136,18 @@ func (entry *Entry) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	return nil
 }
 
+func Sanitize[T ~string](text T) string {
+	var sb strings.Builder
+	for _, line := range strings.Split(string(text), "\n") {
+		if sb.Len() > 0 {
+			sb.WriteByte(' ')
+		}
+		sb.WriteString(strings.TrimSpace(line))
+	}
+
+	return sb.String()
+}
+
 func (entry *Entry) parseDesc(d *xml.Decoder, start xml.StartElement) error {
 	var name struct {
 		Name string `xml:"refname"`
@@ -149,7 +159,7 @@ func (entry *Entry) parseDesc(d *xml.Decoder, start xml.StartElement) error {
 	if len(entry.Name) == 0 {
 		entry.Name = name.Name
 	}
-	entry.Desc = util.Sanitize(name.Desc)
+	entry.Desc = Sanitize(name.Desc)
 	return nil
 }
 

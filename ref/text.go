@@ -3,8 +3,6 @@ package ref
 import (
 	"bytes"
 	"encoding/xml"
-
-	"github.com/ForeverZer0/gldoc/util"
 )
 
 // A Text object captures the inner XML as text, but also flattens nested elements into their inner text value.
@@ -21,6 +19,6 @@ func (text *Text) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 		}
 		token, err = d.Token()
 	}
-	*text = Text(util.Sanitize(sb.String()))
+	*text = Text(Sanitize(sb.String()))
 	return err
 }
