@@ -14,15 +14,15 @@ gldoc --api=gl --version=3.3
 ```
 There are few very options for the server, the defaults will likely be suitable for most use-cases.
 ```
-Usage:
-  gldoc [flags]
-
-Flags:
-      --api string        target OpenGL API ("gl" or "gles") (default "gl")
-  -h, --help              help for gldoc
-      --host string       address the server will handle requests on (default "localhost")
-      --port int          port the server will handle requests on (default 8888)
-      --version float32   target version for the OpenGL API, or 0 for any/latest
+Usage gldoc:
+  -gles
+    	load documentation for GLES API
+  -host string
+    	address to serve HTTP requests on (default "localhost")
+  -port int
+    	port to serve HTTP requests on (default 8888)
+  -version float
+    	target version for the OpenGL API to document (default 0 for latest/any)
 ```
 
 ### Make Requests
@@ -73,4 +73,10 @@ curl --silent localhost:8888/glBufferData | jq
 }
 ```
 
-This can be easily read and used to create inline documentation when generating OpenGL bindings, or whatever purpose you may need it for, with very little extra effort.
+All responses will be structured exactly as above, which is illustrative of the complete DSL. This can be easily read and used to create inline documentation when generating OpenGL bindings, or whatever purpose you may need it for, with very little extra effort.
+
+ Note that this is **not** a replacement for the full OpenGL API documentation with detailed notes, examples, or anything else in-depth, which is beyond the scope of this project. It is intended for retreiving only a brief summary of functions and their arguments, typically for generating code-comments, inline documentation, etc.
+
+ ## Extensions
+
+ OpenGL extensions are currently not supported nor planned at this time, though that may be subject to change in the future.
